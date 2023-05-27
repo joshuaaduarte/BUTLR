@@ -2,7 +2,7 @@
 ___
 
 #  Introduction
-BUTLR is a new kind of planner that aims to revolutionize the way people plan and reach their goals. Using advanced machine learning algorithms, BUTLR actively learns the user's habits and schedule to provide personalized planning and goal-setting solutions. The goal of BUTLR is to make planning and goal-setting as effective and efficient as possible, so that users can focus on what really matters: making progress towards their goals.
+BUTLR is a new kind of planner that aims to revolutionize the way people plan and reach their goals, tasks, and grow healthy habits. Using advanced machine learning algorithms, BUTLR actively learns the user's habits and schedule to provide personalized planning and goal-setting solutions. The goal of BUTLR is to make planning and goal-setting as effective and efficient as possible, so that users can focus on what really matters: making progress towards their goals.
 
 # Problem
 Planning and goal-setting can be a time-consuming and complicated process. People often struggle to find the right balance between their work, personal life, and other obligations, which can make it difficult to make meaningful progress towards their goals. Furthermore, traditional planners often rely on a one-size-fits-all approach that doesn't take into account the unique needs and habits of individual users.
