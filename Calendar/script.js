@@ -4,10 +4,11 @@ let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('e
 
 const calendar = document.getElementById('calendar');
 const newEventModal = document.getElementById('newEventModal');
+const newEventChatModal = document.getElementById('newEventChatModal');
 const deleteEventModal = document.getElementById('deleteEventModal');
 const backDrop = document.getElementById('modalBackDrop');
 const eventTitleInput = document.getElementById('eventTitleInput');
-const weekdays = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function openModal(date) {
     clicked = date;
@@ -29,8 +30,8 @@ function openModal(date) {
 function load() {
     const dt = new Date();
 
-    if (nav !== 0){
-        dt.setMonth(new Date().getMonth()+nav);
+    if (nav !== 0) {
+        dt.setMonth(new Date().getMonth() + nav);
     }
 
     const day = dt.getDate();
@@ -39,7 +40,7 @@ function load() {
 
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
+
     const dateString = firstDayOfMonth.toLocaleDateString('en-us', {
         weekday: 'long',
         year: 'numeric',
@@ -47,15 +48,15 @@ function load() {
         day: 'numeric',
     });
 
-    
+
     const paddingDays = weekdays.indexOf(dateString.split(', ')[0]);
 
-    document.getElementById('monthDisplay').innerHTML = `${dt.toLocaleDateString('en-us', {month: 'long'} )} ${year}`;
+    document.getElementById('monthDisplay').innerHTML = `${dt.toLocaleDateString('en-us', { month: 'long' })} ${year}`;
 
     calendar.innerHTML = '';
-    
 
-    for(let i = 1; i <= paddingDays + daysInMonth; i++) {
+
+    for (let i = 1; i <= paddingDays + daysInMonth; i++) {
         const daySquare = document.createElement('div');
         daySquare.classList.add('day');
 
@@ -70,7 +71,7 @@ function load() {
                 daySquare.id = 'currentDay';
             }
 
-            if (eventForDay){
+            if (eventForDay) {
                 const eventDiv = document.createElement('div');
                 eventDiv.classList.add('event');
                 eventDiv.innerText = eventForDay.title;
@@ -88,17 +89,18 @@ function load() {
 
 }
 
-function closeModal(){
+function closeModal() {
     eventTitleInput.classList.remove('error');
     newEventModal.style.display = 'none';
+    newEventChatModal.style.display = 'none';
     deleteEventModal.style.display = 'none';
     backDrop.style.display = 'none';
     eventTitleInput.value = '';
-    clicked = null; 
+    clicked = null;
     load();
 }
 
-function saveEvent () {
+function saveEvent() {
     if (eventTitleInput.value) {
         eventTitleInput.classList.remove('error');
 
@@ -115,29 +117,57 @@ function saveEvent () {
     }
 }
 
-function deleteEvent () {
+// This is where gpt will go about interpreting the information to then process into the calendar
+function saveChatEvent() {
+    if (eventTitleInput.value) {
+        eventTitleInput.classList.remove('error');
+
+        events.push({
+            date: clicked,
+            title: eventTitleInput.value,
+
+        })
+
+        localStorage.setItem('events', JSON.stringify(events));
+        closeModal();
+    } else {
+        eventTitleInput.classList.add('error');
+    }
+}
+
+function deleteEvent() {
     events = events.filter(e => e.date !== clicked);
     localStorage.removeItem('events', JSON.stringify(events));
     closeModal();
 }
 
+function newEventChatModalFunc() {
+    console.log('new event clicked');
+    newEventChatModal.style.display = 'block';
+    backDrop.style.display = 'block';
+
+}
+
 function initButtons() {
     document.getElementById('nextButton').addEventListener('click', () => {
-        nav++; 
+        nav++;
         load();
     });
     document.getElementById('backButton').addEventListener('click', () => {
-        nav--; 
+        nav--;
         load();
     });
 
     document.getElementById('saveButton').addEventListener('click', saveEvent);
-
     document.getElementById('cancelButton').addEventListener('click', closeModal);
-
     document.getElementById('deleteButton').addEventListener('click', deleteEvent);
-
     document.getElementById('closeButton').addEventListener('click', closeModal);
+
+    document.getElementById('newEventChatButton').addEventListener('click',newEventChatModalFunc);
+    document.getElementById('saveChatButton').addEventListener('click', saveChatEvent);
+    document.getElementById('closeChatButton').addEventListener('click', closeModal);
+
+
 }
 
 initButtons();

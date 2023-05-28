@@ -78,7 +78,7 @@ body {
     background-color: #FFFCFF !important;
     box-shadow: none !important;
   }
-  #newEventModal, #deleteEventModal {
+  #newEventModal, #deleteEventModal, #newEventChatModal{
     display: none;
     z-index: 20;
     padding: 25px;
@@ -104,10 +104,10 @@ body {
   #eventTitleInput.error {
     border: 2px solid red;
   }
-  #cancelButton, #deleteButton {
+  #cancelButton, #closeChatButton, #deleteButton {
     background-color: #d36c6c;
   }
-  #saveButton, #closeButton {
+  #saveButton, #saveChatButton,#closeButton {
     background-color: #92a1d1;
   }
   #eventText {
