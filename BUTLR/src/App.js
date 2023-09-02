@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Login } from "./login";
 import { Register } from "./register";
+import AuthDetails  from "./authDetails";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm}/>
       }
+      < AuthDetails />
     </div>
   );
 }

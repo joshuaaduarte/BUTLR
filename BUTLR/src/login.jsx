@@ -1,12 +1,19 @@
 import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./firebase";
 
 export const Login = (props) => {
     const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+            console.log(userCredential)
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (
@@ -17,7 +24,7 @@ export const Login = (props) => {
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email"/>
 
                 <label htmlFor="password">password</label>
-                <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="*********" id="password" name="password"/>
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="*********" id="password" name="password"/>
                 <button type="submit">Log In</button>
             </form>
             <button className="link-btn" onClick={() => props.onFormSwitch('register')}> Don't have an account? Register Here</button>
