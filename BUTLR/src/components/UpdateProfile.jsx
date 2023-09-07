@@ -1,7 +1,9 @@
-import React, {useRef, useState, } from 'react'
+import React, {useRef, useState,useEffect } from 'react'
 import { Card, Form, Button, Alert} from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import { db } from '../firebase'
+import { getDoc, doc } from "firebase/firestore";
 
 export default function Signup() {
     const emailRef = useRef()
@@ -11,6 +13,33 @@ export default function Signup() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [calendarUse, setCalendarUse] = useState('')
+    const [personType, setPersonType] = useState('')
+
+    async function getInformation() {   
+        const docRef = doc(db, "users", currentUser.uid);
+        
+        try {
+            const docSnap = await getDoc(docRef);
+            if(docSnap.exists()) {
+                setFirstName(docSnap.data()['firstName']);
+                setLastName(docSnap.data()['lastName']);
+                setCalendarUse(docSnap.data()['calendarUse']);
+                setPersonType(docSnap.data()['personType'])
+                console.log(docSnap.data()['calendarUse']);
+            } else {
+                console.log("Document does not exist")
+            }
+        
+        } catch(error) {
+            console.log(error)
+        }
+
+        return (firstName)
+      }
+
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -39,16 +68,42 @@ export default function Signup() {
             setLoading(false)
         })
 
+
+
     }
+
+     // Call the getInformation function when the component mounts
+    useEffect(() => {
+    getInformation();
+  });
     
     return (
     <>
-    <Card>
+    <script>
+    </script>
+    
+    <Card >
         <Card.Body>
             <h2 className="text-center mb-4" >Update Profile</h2>
 
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
+                <Form.Group>
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control  readOnly defaultValue={firstName}/>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control readOnly defaultValue={lastName}/>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Calendar Use</Form.Label>
+                    <Form.Control readOnly defaultValue={calendarUse}/>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Person Type</Form.Label>
+                    <Form.Control readOnly defaultValue={personType}/>
+                </Form.Group>
                 <Form.Group id='email'>
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" ref={emailRef} required defaultValue={currentUser.email}/>
@@ -61,7 +116,7 @@ export default function Signup() {
                     <Form.Label>Password Confirmation</Form.Label>
                     <Form.Control type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"/>
                 </Form.Group>
-                <Button disabled={loading} className="w-100 mt-10" type="submit">Update</Button>
+                <Button disabled={loading} className="w-100 mt-3" type="submit">Update</Button>
             </Form>
         </Card.Body>
     </Card>
