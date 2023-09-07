@@ -110,7 +110,7 @@ export default function Dashboard() {
     
     <MDBNavbar expand='lg' light bgColor='light'>
       <MDBContainer fluid>
-        <MDBNavbarBrand href='#'>Navbar</MDBNavbarBrand>
+        <MDBNavbarBrand href='#'>butlr</MDBNavbarBrand>
         <MDBNavbarToggler
           type='button'
           aria-expanded='false'
@@ -127,7 +127,7 @@ export default function Dashboard() {
               </MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
-              <MDBNavbarLink href='#'>Features</MDBNavbarLink>
+              <MDBNavbarLink href='/update-profile'>Update Profile</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
               <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
