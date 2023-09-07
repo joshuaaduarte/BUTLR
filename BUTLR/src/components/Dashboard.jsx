@@ -1,9 +1,20 @@
-import React, { useState , useRef } from 'react'
-import { Card, Button, Alert, Form } from 'react-bootstrap'
+import React, { useState , useRef, useEffect } from 'react'
+import { Container, Card, Button, Alert, Form } from 'react-bootstrap'
 import { Link , useNavigate } from "react-router-dom"
 import { useAuth  } from "../contexts/AuthContext"
 import { db } from '../firebase'
-import { setDoc, doc ,serverTimestamp } from "firebase/firestore"; 
+import { getDoc,setDoc, doc ,serverTimestamp } from "firebase/firestore";
+import {
+    MDBContainer,
+    MDBNavbar,
+    MDBNavbarBrand,
+    MDBNavbarToggler,
+    MDBNavbarNav,
+    MDBNavbarItem,
+    MDBNavbarLink,
+    MDBCollapse,
+    MDBIcon,
+  } from 'mdb-react-ui-kit'; 
 
  
 
@@ -17,6 +28,30 @@ export default function Dashboard() {
     const lastNameRef = useRef()
     const personType = useRef()
     const calendarUse = useRef()
+    const [showNav, setShowNav] = useState(false);
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    
+
+    async function getInformation() {   
+        const docRef = doc(db, "users", currentUser.uid);
+        
+        try {
+            const docSnap = await getDoc(docRef);
+            if(docSnap.exists()) {
+                setFirstName(docSnap.data()['firstName']);
+                setLastName(docSnap.data()['lastName']);
+                console.log(docSnap.data()['calendarUse']);
+            } else {
+                console.log("Document does not exist")
+            }
+        
+        } catch(error) {
+            console.log(error)
+        }
+
+        return (firstName)
+    }
 
     async function handleLogout() {
         setError('')
@@ -38,13 +73,8 @@ export default function Dashboard() {
         const personTypeValue = personType.current.value;
         const calendarUseValue = calendarUse.current.value;
         const userUID = currentUser.uid;
-        // const elementsArray = [...e.target.elements];
-        // const formData = elementsArray.reduce((accumulator, currentValue) => {
-        //     if (currentValue.id) {
-        //         accumulator[currentValue.id] = currentValue.value;
-        //     }
-        //     return accumulator;
-        // }, {})
+        
+
 
         try{
             //const docRef = doc(collection(db, 'users'))
@@ -71,11 +101,53 @@ export default function Dashboard() {
         
 
     }
-
+    useEffect(() => {
+        getInformation();
+      });
 
   return (
     <>
-    <Card>
+    
+    <MDBNavbar expand='lg' light bgColor='light'>
+      <MDBContainer fluid>
+        <MDBNavbarBrand href='#'>Navbar</MDBNavbarBrand>
+        <MDBNavbarToggler
+          type='button'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
+          onClick={() => setShowNav(!showNav)}
+        >
+          <MDBIcon icon='bars' fas />
+        </MDBNavbarToggler>
+        <MDBCollapse navbar show={showNav}>
+          <MDBNavbarNav>
+            <MDBNavbarItem>
+              <MDBNavbarLink active aria-current='page' href='#'>
+                Home
+              </MDBNavbarLink>
+            </MDBNavbarItem>
+            <MDBNavbarItem>
+              <MDBNavbarLink href='#'>Features</MDBNavbarLink>
+            </MDBNavbarItem>
+            <MDBNavbarItem>
+              <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
+            </MDBNavbarItem>
+            <MDBNavbarItem>
+              <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
+                Disabled
+              </MDBNavbarLink>
+            </MDBNavbarItem>
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBContainer>
+    </MDBNavbar>
+    <Container 
+      className="d-flex align-items-center justify-content-center"
+      style={{minHeight: "100vh"}}
+    >
+    <div className="w-100" style={{maxWidth: "400px"}}>
+    <h2 className="text-center"> Welcome, {firstName} {lastName}!</h2>
+    <Card className="mt-3">
         <Card.Body>
         <h2 className="text-center mb-4" >Profile</h2>
         {error && <Alert variant="danger">{error}</Alert>}
@@ -124,7 +196,10 @@ export default function Dashboard() {
     <div className="w-100 text-center mt-2">
         <Button onClick={handleLogout}>Log Out</Button>
     </div>
+    </div>
+    </Container>
     </>
+
   )
 }
 

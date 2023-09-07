@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { db } from '../firebase'
 import { getDoc, doc } from "firebase/firestore";
 
+
 export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()
