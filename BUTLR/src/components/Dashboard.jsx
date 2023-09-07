@@ -41,7 +41,7 @@ export default function Dashboard() {
             if(docSnap.exists()) {
                 setFirstName(docSnap.data()['firstName']);
                 setLastName(docSnap.data()['lastName']);
-                console.log(docSnap.data()['calendarUse']);
+
             } else {
                 console.log("Document does not exist")
             }

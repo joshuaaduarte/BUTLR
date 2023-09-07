@@ -1,5 +1,5 @@
 import React, {useRef, useState,useEffect } from 'react'
-import { Card, Form, Button, Alert} from "react-bootstrap"
+import { Card, Form, Button, Alert, Container} from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import { db } from '../firebase'
@@ -80,8 +80,11 @@ export default function Signup() {
     
     return (
     <>
-    <script>
-    </script>
+    <Container 
+      className="d-flex align-items-center justify-content-center"
+      style={{minHeight: "100vh"}}
+    >
+    <div className="w-100" style={{maxWidth: "400px"}}>
     
     <Card >
         <Card.Body>
@@ -124,6 +127,8 @@ export default function Signup() {
     <div className="w-100 text-center mt-2">
         <Link to="/">Cancel</Link>
     </div>
+    </div>
+    </Container>
     </>
     )
 }
