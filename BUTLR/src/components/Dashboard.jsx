@@ -229,7 +229,7 @@ export default function Dashboard() {
     </Col>
     <Col sm={6} className=' d-flex justify-content-center align-items-center' style={{minHeight: "100vh", maxWidth: "400px"}}>
     <div className="" >
-    <Card className="mt-3">
+    {/* <Card className="mt-3">
         <Card.Body>
         <h2 className="text-center mb-4" >Profile</h2>
         {error && <Alert variant="danger">{error}</Alert>}
@@ -238,7 +238,7 @@ export default function Dashboard() {
             Update Profile
         </Link>
         </Card.Body>
-    </Card>
+    </Card> */}
     <Card className="mt-3">
         <Card.Body>
         <h2 className="text-center mb-4" >Basic User Information</h2>
@@ -271,12 +271,12 @@ export default function Dashboard() {
                     </Form.Select>
                 </Form.Label>
             </Form.Group>
-            <Button  className="w-100 mt-2" type="submit">Submit</Button>
+            <Button  className="w-100 mt-2 border-dark bg-dark" type="submit">Submit</Button>
         </Form>
         </Card.Body>
     </Card>
     <div className="w-100 text-center mt-2">
-        <Button onClick={handleLogout}>Log Out</Button>
+        <Button className='bg-light border-light text-dark' onClick={handleLogout}>Log Out</Button>
     </div>
     </div>
     </Col>

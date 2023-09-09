@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import { db } from '../firebase'
 import { getDoc, doc } from "firebase/firestore";
+import Navbar from 'react-bootstrap/Navbar';
 
 
 export default function Signup() {
@@ -80,8 +81,15 @@ export default function Signup() {
     
     return (
     <>
-    <Container 
-      className="d-flex align-items-center justify-content-center"
+    <Navbar bg="dark" data-bs-theme="dark" className="bg-body-tertiary ">
+      <Container>
+        <Navbar.Brand href="#home">butlr</Navbar.Brand>
+
+      </Container>
+    </Navbar>
+
+    <Container fluid 
+      className="d-flex align-items-center justify-content-center bg-dark"
       style={{minHeight: "100vh"}}
     >
     <div className="w-100" style={{maxWidth: "400px"}}>
@@ -120,13 +128,11 @@ export default function Signup() {
                     <Form.Label>Password Confirmation</Form.Label>
                     <Form.Control type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"/>
                 </Form.Group>
-                <Button disabled={loading} className="w-100 mt-3" type="submit">Update</Button>
+                <Button disabled={loading} className="w-100 mt-3 bg-dark border-dark" type="submit">Update</Button>
+                <Button className="w-100 mt-2 bg-danger border-danger" href='/'>Cancel</Button>
             </Form>
         </Card.Body>
     </Card>
-    <div className="w-100 text-center mt-2">
-        <Link to="/">Cancel</Link>
-    </div>
     </div>
     </Container>
     </>

@@ -2,6 +2,7 @@ import React, {useRef, useState, } from 'react'
 import { Card, Form, Button, Alert, Container} from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import Navbar from 'react-bootstrap/Navbar';
 
 export default function Signup() {
     const emailRef = useRef()
@@ -32,8 +33,14 @@ export default function Signup() {
     
     return (
     <>
-    <Container 
-      className="d-flex align-items-center justify-content-center"
+    <Navbar bg="dark" data-bs-theme="dark" className="bg-body-tertiary ">
+      <Container>
+        <Navbar.Brand href="#home">butlr</Navbar.Brand>
+
+      </Container>
+    </Navbar>
+    <Container fluid
+      className="d-flex align-items-center justify-content-center bg-dark"
       style={{minHeight: "100vh"}}
     >
     <div className="w-100" style={{maxWidth: "400px"}}>
@@ -55,12 +62,12 @@ export default function Signup() {
                     <Form.Label>Password Confirmation</Form.Label>
                     <Form.Control type="password" ref={passwordConfirmRef} required />
                 </Form.Group>
-                <Button disabled={loading} className="w-100 mt-10" type="submit">Sign Up</Button>
+                <Button disabled={loading} className="border-dark bg-dark w-100 mt-2" type="submit">Sign Up</Button>
             </Form>
         </Card.Body>
     </Card>
-    <div className="w-100 text-center mt-2">
-        Already have an account? Need an Account? <Link to="/login">Log In</Link>
+    <div className="w-100 text-center mt-2 text-white">
+        Already have an account? <Link to="/login">Log In</Link>
     </div>
     </div>
     </Container>

@@ -2,6 +2,8 @@ import React, {useRef, useState, } from 'react'
 import { Card, Form, Button, Alert, Container} from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
+import Navbar from 'react-bootstrap/Navbar';
+
 
 export default function ForgotPassword() {
     const emailRef = useRef()
@@ -29,8 +31,15 @@ export default function ForgotPassword() {
     
     return (
     <>
-    <Container 
-      className="d-flex align-items-center justify-content-center"
+    <Navbar bg="dark" data-bs-theme="dark" className="bg-body-tertiary ">
+      <Container>
+        <Navbar.Brand href="#home">butlr</Navbar.Brand>
+
+      </Container>
+    </Navbar>
+
+    <Container fluid 
+      className="d-flex align-items-center justify-content-center bg-dark"
       style={{minHeight: "100vh"}}
     >
     <div className="w-100" style={{maxWidth: "400px"}}>
@@ -45,14 +54,14 @@ export default function ForgotPassword() {
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" ref={emailRef} required />
                 </Form.Group>
-                <Button disabled={loading} className="w-100 mt-3" type="submit">Reset Password</Button>
+                <Button disabled={loading} className="w-100 mt-3 border-dark bg-dark" type="submit">Reset Password</Button>
             </Form>
             <div className="w-100 text-center mt-3">
-                <Link to="/login">Login</Link>
+                <Link to="/login">Back to Login</Link>
             </div>
         </Card.Body>
     </Card>
-    <div className="w-100 text-center mt-2">
+    <div className="w-100 text-center mt-2 text-white">
         Need an Account? <Link to="/signup">Sign Up</Link>
     </div>
     </div>
