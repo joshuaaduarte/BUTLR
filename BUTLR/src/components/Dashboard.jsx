@@ -1,20 +1,11 @@
 import React, { useState , useRef, useEffect } from 'react'
-import { Container, Card, Button, Alert, Form, Row, Col } from 'react-bootstrap'
+import { Container, Card, Button, Alert, Form, Row, Col, Navbar } from 'react-bootstrap'
+import Nav from 'react-bootstrap/Nav';
 import { Link , useNavigate } from "react-router-dom"
 import { useAuth  } from "../contexts/AuthContext"
 import { db } from '../firebase'
 import { getDoc,setDoc, doc ,serverTimestamp } from "firebase/firestore";
-import {
-    MDBContainer,
-    MDBNavbar,
-    MDBNavbarBrand,
-    MDBNavbarToggler,
-    MDBNavbarNav,
-    MDBNavbarItem,
-    MDBNavbarLink,
-    MDBCollapse,
-    MDBIcon,
-  } from 'mdb-react-ui-kit'; 
+ 
 
   import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
   import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
@@ -192,51 +183,34 @@ export default function Dashboard() {
   return (
     <>
     {/* Pertaining to the navbar */}
-    <MDBNavbar expand='lg' light bgColor='light'>
-      <MDBContainer fluid>
-        <MDBNavbarBrand href='#'>butlr</MDBNavbarBrand>
-        <MDBNavbarToggler
-          type='button'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
-          onClick={() => setShowNav(!showNav)}
-        >
-          <MDBIcon icon='bars' fas />
-        </MDBNavbarToggler>
-        <MDBCollapse navbar show={showNav}>
-          <MDBNavbarNav>
-            <MDBNavbarItem>
-              <MDBNavbarLink active aria-current='page' href='#'>
-                Home
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href='/update-profile'>Update Profile</MDBNavbarLink>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
-                Disabled
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-          </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBContainer>
-    </MDBNavbar>
+    <Navbar bg="dark" data-bs-theme="dark" className="bg-body-tertiary ">
+      <Container>
+        <Navbar.Brand href="#home">butlr</Navbar.Brand>
+        <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href='/update-profile'>Update Profile</Nav.Link>
+            <Nav.Link href="#pricing">Pricing</Nav.Link>
+        </Nav>
+        <Navbar.Toggle />
+        <Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+            Signed in as: <a>{firstName} {lastName}</a>
+          </Navbar.Text>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
     {/* Pertaining to the nav bar */}
 
     {/* Pertaining to the information on the dashboard */}
     <Container fluid
-      className="d-flex flex-column"
+      className="d-flex flex-column bg-dark"
       style={{minHeight: "100vh"}}
     >
     <Row className=" justify-content-center">
     <Col sm={6} className='d-flex justify-content-center align-items-center ' style={{minHeight: "100vh", maxWidth: "400px"}}>
     
     <div style={{ position:"relative", height: "800px", width: "700px"  }}>
-      <h2 className='text-center'>Chat with me</h2>
+      <h2 className='text-center text-white' >Chat with me</h2>
         <MainContainer>
           <ChatContainer>       
             <MessageList 
@@ -255,7 +229,6 @@ export default function Dashboard() {
     </Col>
     <Col sm={6} className=' d-flex justify-content-center align-items-center' style={{minHeight: "100vh", maxWidth: "400px"}}>
     <div className="" >
-    <h2 className="text-center"> Welcome, {firstName} {lastName}!</h2>
     <Card className="mt-3">
         <Card.Body>
         <h2 className="text-center mb-4" >Profile</h2>
