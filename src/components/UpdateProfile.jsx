@@ -83,7 +83,7 @@ export default function Signup() {
     <>
     <Navbar bg="dark" data-bs-theme="dark" className="bg-body-tertiary ">
       <Container>
-        <Navbar.Brand href="#home">butlr</Navbar.Brand>
+        <Navbar.Brand href='/'>butlr</Navbar.Brand>
 
       </Container>
     </Navbar>

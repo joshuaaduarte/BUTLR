@@ -5,6 +5,8 @@ import { Link , useNavigate } from "react-router-dom"
 import { useAuth  } from "../contexts/AuthContext"
 import { db } from '../firebase'
 import { getDoc,setDoc, doc ,serverTimestamp } from "firebase/firestore";
+import { DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
+import "../css/CalendarStyles.css";
  
 
   import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
@@ -13,7 +15,17 @@ import { getDoc,setDoc, doc ,serverTimestamp } from "firebase/firestore";
  
   const API_KEY = '';
   
-
+  const styles = {
+    wrap: {
+      display: "flex"
+    },
+    left: {
+      marginRight: "10px"
+    },
+    main: {
+      flexGrow: "1"
+    }
+  };
   // "Explain things like you would to a 10 year old learning how to code."
   const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
     "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
@@ -31,11 +43,25 @@ export default function Dashboard() {
     const [showNav, setShowNav] = useState(false);
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
+
+    // calendar 
+    const [config, setConfig] = useState({
+      viewType: "Week",
+      durationBarVisible: false
+    })
+    const calendarRef = useRef()
+    const handleTimeRangeSelected = args => {
+      calendarRef.current.control.update({
+        startDate: args.day
+      });
+    }
+
+
     
     // for chat ui
     const [messages, setMessages] = useState([
       {
-        message: "Hello, I'm ChatGPT! Ask me anything!",
+        message: "Hi! I'm butlr, lets get to planning!",
         sentTime: "just now",
         sender: "ChatGPT"
       }
@@ -194,8 +220,9 @@ export default function Dashboard() {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            Signed in as: <a>{firstName} {lastName}</a>
+            Signed in as: <a>{firstName} {lastName} &nbsp;&nbsp;&nbsp;&nbsp;  </a>
           </Navbar.Text>
+          <Nav.Link className='text-white' onClick={handleLogout} >Log Out</Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -207,11 +234,11 @@ export default function Dashboard() {
       style={{minHeight: "100vh"}}
     >
     <Row className=" justify-content-center">
-    <Col sm={6} className='d-flex justify-content-center align-items-center ' style={{minHeight: "100vh", maxWidth: "400px"}}>
+    <Col sm={3} className='d-flex justify-content-center align-items-center ' style={{minHeight: "100vh", maxWidth: "400px"}}>
     
-    <div style={{ position:"relative", height: "800px", width: "700px"  }}>
-      <h2 className='text-center text-white' >Chat with me</h2>
-        <MainContainer>
+    <div style={{ position:"relative", height: "600px", width: "700px"  }}>
+      <h2 className='text-center text-white' >Plan your week</h2>
+        <MainContainer >
           <ChatContainer>       
             <MessageList 
               scrollBehavior="smooth" 
@@ -227,19 +254,64 @@ export default function Dashboard() {
         </MainContainer>
       </div>
     </Col>
-    <Col sm={6} className=' d-flex justify-content-center align-items-center' style={{minHeight: "100vh", maxWidth: "400px"}}>
+    <Col md={8} className=' d-flex justify-content-center align-items-center' style={{minHeight: "100vh", maxWidth: "1200px"}}>
     <div className="" >
+
+    <div style={styles.wrap}>
+            <div style={styles.left}>
+                <DayPilotNavigator
+                    selectMode={"Week"}
+                    showMonths={3}
+                    skipMonths={3}
+                    onTimeRangeSelected={handleTimeRangeSelected}
+                />
+            </div>
+            <div style={styles.main}>
+                <DayPilotCalendar {...config} ref={calendarRef} />
+            </div>
+        </div>
+    {/* <Container fluid className='text-white'>
+      <Row>
+        <h2 className='text-center text-white'>9/11-9/17</h2>
+      </Row>
+      <Row>
+        <Col sm={1}>
+          <Card >
+              Time
+          </Card>
+        </Col>
+        <Col sm={2}>
+          <Card >
+              Monday
+          </Card>
+        </Col>
+        <Col sm={2}>
+          <Card >
+              Tuesday
+          </Card>
+        </Col>
+        <Col sm={2}>
+          <Card >
+              Wednesday
+          </Card>
+        </Col>
+        <Col sm={2}>
+          <Card >
+              Thursday
+          </Card>
+        </Col>
+        <Col sm={2}>
+          <Card >
+             Friday
+          </Card>
+        </Col>
+
+      </Row>
+
+    </Container> */}
+
+
     {/* <Card className="mt-3">
-        <Card.Body>
-        <h2 className="text-center mb-4" >Profile</h2>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <strong>Email: </strong> {currentUser.email}
-        <Link to="/update-profile" className="btn btn-primary w-100 mt-2" >
-            Update Profile
-        </Link>
-        </Card.Body>
-    </Card> */}
-    <Card className="mt-3">
         <Card.Body>
         <h2 className="text-center mb-4" >Basic User Information</h2>
         <Form onSubmit={handleSubmit}>
@@ -274,10 +346,8 @@ export default function Dashboard() {
             <Button  className="w-100 mt-2 border-dark bg-dark" type="submit">Submit</Button>
         </Form>
         </Card.Body>
-    </Card>
-    <div className="w-100 text-center mt-2">
-        <Button className='bg-light border-light text-dark' onClick={handleLogout}>Log Out</Button>
-    </div>
+    </Card> */}
+
     </div>
     </Col>
     </Row>
