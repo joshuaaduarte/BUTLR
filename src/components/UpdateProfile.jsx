@@ -1,13 +1,13 @@
 import React, {useRef, useState,useEffect } from 'react'
 import { Card, Form, Button, Alert, Container} from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { db } from '../firebase'
 import { getDoc, doc } from "firebase/firestore";
 import Navbar from 'react-bootstrap/Navbar';
 
 
-export default function Signup() {
+export default function UpdateProfile() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()

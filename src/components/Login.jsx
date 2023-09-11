@@ -3,7 +3,6 @@ import { Card, Form, Button, Alert, Container} from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 
 
 export default function Login() {
@@ -17,14 +16,14 @@ export default function Login() {
     async function handleSubmit(e) {
         e.preventDefault()
 
+        
         try {
         setError("")
         setLoading(true)
         await login(emailRef.current.value, passwordRef.current.value)
-        navigate("/")
+        navigate("/user-information")    
         } catch {
-            setError("Failed to Log In")
-            
+            setError("Failed to Log In")    
         }
         setLoading(false)
     }

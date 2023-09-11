@@ -23,7 +23,7 @@ export default function Signup() {
         setError("")
         setLoading(true)
         await signup(emailRef.current.value, passwordRef.current.value)
-        navigate("/")
+        navigate("/user-information")
         } catch {
             setError("Failed to Create an Account")
             
